@@ -1,4 +1,5 @@
-/* ---- Global box sizing (prevents border/layout weirdness) ---- */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
 *,
 *::before,
 *::after {
@@ -10,108 +11,114 @@ html, body {
   margin: 0;
   background: #0b0f14;
   color: #e8eef5;
-  overflow: hidden; /* prevents page growing */
+  overflow: hidden;
 }
 
-/* ---- Layout ---- */
 #app {
-  height: 100vh;                 /* lock to viewport */
+  height: 100vh;
   display: grid;
-  grid-template-columns: 320px 1fr;
+  grid-template-columns: 300px 1fr;
 }
 
 /* ---- Panel ---- */
 .panel {
-  padding: 16px;
+  padding: 14px;
   border-right: 1px solid rgba(255,255,255,0.08);
   font-family: "Press Start 2P", ui-monospace, monospace;
   min-height: 0;
-  overflow: auto;  /* panel scrolls if content exceeds height */
-
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
 }
 
 .panel h2 {
-  margin: 0 0 8px 0;
-  font-size: 14px;
+  margin: 0 0 6px 0;
+  font-size: 13px;
   line-height: 1.4;
+  letter-spacing: 0.04em;
+  color: #ffe066;
 }
 
 .tiny {
-  opacity: 0.75;
-  font-size: 11px;
-  line-height: 1.6;
+  opacity: 0.7;
+  font-size: 9px;
+  line-height: 1.7;
 }
 
 /* ---- Controls ---- */
 button {
   width: 100%;
-  margin-bottom: 10px;
-  padding: 10px 12px;
+  margin-bottom: 8px;
+  padding: 9px 12px;
   cursor: pointer;
-
   font-family: "Press Start 2P", ui-monospace, monospace;
-  font-size: 11px;
+  font-size: 10px;
   line-height: 1.4;
-
-  border: 1px solid rgba(232,238,245,0.35);
+  border: 1px solid rgba(232,238,245,0.3);
   background: transparent;
   color: #e8eef5;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+button:hover:not(:disabled) {
+  background: rgba(232,238,245,0.06);
+  border-color: rgba(232,238,245,0.6);
 }
 
 button:disabled {
-  opacity: 0.5;
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
 label {
   display: block;
-  margin-top: 12px;
-  font-size: 11px;
-  line-height: 1.6;
-  opacity: 0.95;
+  margin-top: 10px;
+  font-size: 9px;
+  line-height: 1.7;
+  opacity: 0.9;
 }
 
 input[type="range"] {
   width: 100%;
+  margin-top: 4px;
+  accent-color: #ffe066;
 }
 
 /* ---- Stage / Canvas ---- */
 #stage {
-  min-height: 0;   /* allows it to fit grid without pushing page */
+  min-height: 0;
   height: 100%;
-  padding: 24px 24px 48px 24px; /* frame padding */
+  padding: 5%;
 }
 
 #game {
   width: 100%;
   height: 100%;
   display: block;
-
-  border: 2px solid #e8eef5;
+  border: 1px solid #e8eef5;
 }
 
-/* ---- Hand tracking preview (left panel) ---- */
+/* ---- Hand tracking preview ---- */
 .camBox {
   position: relative;
   width: 100%;
   aspect-ratio: 4 / 3;
-  margin: 12px 0 10px;
-  border-radius: 12px;
+  margin: 10px 0 8px;
+  border-radius: 8px;
   overflow: hidden;
-  border: 1px solid rgba(232,238,245,0.35);
+  border: 1px solid rgba(232,238,245,0.2);
   background: #111822;
 }
 
-/* Override global 'video { display:none }' */
 #webcam {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transform: scaleX(-1); /* mirror like a selfie cam */
+  transform: scaleX(-1);
 }
 
-/* Landmark overlay */
 #handOverlay {
   position: absolute;
   inset: 0;
@@ -121,3 +128,188 @@ input[type="range"] {
   pointer-events: none;
 }
 
+/* ---- Enemy legend ---- */
+.legend {
+  margin-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 10px;
+}
+
+.legend-title {
+  font-size: 9px;
+  opacity: 0.5;
+  margin-bottom: 7px;
+  letter-spacing: 0.08em;
+}
+
+.legend-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 9px;
+  line-height: 1.5;
+}
+
+.legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.legend-name {
+  opacity: 0.85;
+  min-width: 52px;
+}
+
+.legend-desc {
+  opacity: 0.45;
+  font-size: 8px;
+}
+
+/* ---- Divider ---- */
+.divider {
+  height: 1px;
+  background: rgba(255,255,255,0.07);
+  margin: 8px 0;
+}
+
+#status {
+  font-size: 9px;
+  opacity: 0.6;
+  min-height: 14px;
+}
+
+/* ---- Start Screen ---- */
+#stage {
+  position: relative;
+}
+
+#startScreen {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0b0f14;
+  overflow-y: auto;
+  padding: 48px 40px;
+}
+
+.start-inner {
+  max-width: 500px;
+  width: 100%;
+  font-family: "Press Start 2P", ui-monospace, monospace;
+}
+
+.start-title {
+  font-size: 24px;
+  line-height: 1.6;
+  color: #ffe066;
+  margin: 0 0 14px 0;
+  letter-spacing: 0.04em;
+}
+
+.start-sub {
+  font-size: 8px;
+  opacity: 0.3;
+  margin: 0;
+  letter-spacing: 0.16em;
+}
+
+.start-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  margin: 32px 0;
+}
+
+.start-section {
+  margin-bottom: 0;
+}
+
+.start-section-title {
+  font-size: 8px;
+  opacity: 0.28;
+  letter-spacing: 0.2em;
+  margin-bottom: 22px;
+}
+
+.start-step {
+  display: flex;
+  gap: 20px;
+  align-items: baseline;
+  margin-bottom: 18px;
+  font-size: 8px;
+  line-height: 2;
+  opacity: 0.72;
+}
+
+.step-num {
+  color: #ffe066;
+  opacity: 1;
+  flex-shrink: 0;
+  font-size: 7px;
+  letter-spacing: 0.05em;
+}
+
+.start-enemy {
+  font-size: 8px;
+  line-height: 2.6;
+  opacity: 0.65;
+}
+
+.start-cta {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 9px;
+  color: #e8eef5;
+  animation: cta-pulse 2.5s ease-in-out infinite;
+}
+
+.start-arrow {
+  font-size: 15px;
+  color: #ffe066;
+  display: inline-block;
+  animation: arrow-bounce 1.1s ease-in-out infinite;
+}
+
+@keyframes arrow-bounce {
+  0%, 100% { transform: translateX(0); }
+  50%       { transform: translateX(-8px); }
+}
+
+@keyframes cta-pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+/* ---- Glowing Start Camera button ---- */
+#btnStart.btn-glow {
+  border-color: #ffe066;
+  color: #ffe066;
+  animation: btn-glow-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes btn-glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 6px rgba(255, 224, 102, 0.3),
+                0 0 16px rgba(255, 224, 102, 0.12);
+    border-color: rgba(255, 224, 102, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 14px rgba(255, 224, 102, 0.7),
+                0 0 32px rgba(255, 224, 102, 0.3);
+    border-color: #ffe066;
+  }
+}
+
+/* ---- Panel extras: hidden until game starts ---- */
+.panel-extras {
+  display: none;
+}
+
+.game-started .panel-extras {
+  display: block;
+}

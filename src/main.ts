@@ -2,6 +2,7 @@ import "./style.css";
 import { HandWind } from "./wind/handWind";
 import type { HandWindConfig } from "./wind/handWind";
 import { Game } from "./wind/game";
+import { startMusic } from "./wind/sounds";
 
 const canvas = document.querySelector<HTMLCanvasElement>("#game")!;
 const video = document.querySelector<HTMLVideoElement>("#webcam")!;
@@ -131,6 +132,13 @@ btnStart.onclick = async () => {
   btnStart.disabled = true;
   try {
     await handWind.start();
+
+    // hide start screen, show game
+    document.querySelector(".panel")!.classList.add("game-started");
+    document.getElementById("startScreen")!.style.display = "none";
+    document.getElementById("game")!.style.display = "block";
+    btnStart.classList.remove("btn-glow");
+    startMusic(); 
     btnStop.disabled = false;
   } catch (e) {
     console.error(e);
@@ -150,9 +158,10 @@ window.addEventListener("keydown", (e) => {
   if (e.key === "Escape") {
     const next = !game.isPaused();
     game.setPaused(next);
+    statusEl.textContent = next ? "Paused — press Esc to resume" : "Running";
+  }
 
-    statusEl.textContent = next
-      ? "Paused — press Esc to resume"
-      : "Running";
+  if (e.key === "r" || e.key === "R") {
+    window.location.reload();
   }
 });
