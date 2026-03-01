@@ -94,6 +94,7 @@ function buildWaves(): Wave[] {
 }
 
 export class Game {
+  private started = false;
   private canvas: HTMLCanvasElement;
   private ctx: CanvasRenderingContext2D;
 
@@ -148,6 +149,7 @@ export class Game {
     else startMusic();
   }
   isPaused() { return this.paused; }
+  start() { this.started = true; }
 
   setWind(wx: number, wz: number, spread = 1, pointerX = 0.5) {
     const kx = 0.020, kz = 0.06;
@@ -167,6 +169,7 @@ export class Game {
   }
 
   tick() {
+    if (!this.started) return;
     const w = this.canvas.width;
     const h = this.canvas.height;
     if (this.paused) { this.render(w, h); return; }

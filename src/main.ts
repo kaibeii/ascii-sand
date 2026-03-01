@@ -132,7 +132,7 @@ btnStart.onclick = async () => {
   btnStart.disabled = true;
   try {
     await handWind.start();
-
+    game.start();
     // hide start screen, show game
     document.querySelector(".panel")!.classList.add("game-started");
     document.getElementById("startScreen")!.style.display = "none";
