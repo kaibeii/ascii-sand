@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASCII Windstrike</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+    <script type="module" crossorigin src="/ascii-sand/assets/index-DHfpMogz.js"></script>
+    <link rel="stylesheet" crossorigin href="/ascii-sand/assets/index-DLYC0XaL.css">
+  </head>
+
+  <body>
+    <div id="app">
+      <div class="panel">
+        <h2>ASCII<br>WINDSTRIKE</h2>
+        <p class="tiny">
+          Move your index finger to generate wind.<br>
+          Blow sand into enemies to defeat them.
+        </p>
+
+        <div class="camBox">
+          <video id="webcam" autoplay playsinline muted></video>
+          <canvas id="handOverlay"></canvas>
+        </div>
+
+        <button id="btnStart" class="btn-glow">&#x25B6; Start Camera</button>
+        <button id="btnStop" disabled>&#x25A0; Stop Camera</button>
+
+        <!-- Everything below hidden until game starts -->
+        <div class="panel-extras">
+
+          <label>Wind Sensitivity
+            <input id="sens" type="range" min="0.2" max="3" step="0.05" value="1.2" />
+          </label>
+
+          <label>
+            <input id="debug" type="checkbox" /> Debug overlay
+          </label>
+
+          <div class="divider"></div>
+
+          <div class="legend">
+            <div class="legend-title">ENEMIES</div>
+            <div class="legend-row">
+              <div class="legend-dot" style="background:#e8eef5"></div>
+              <span class="legend-name">SMALL</span>
+              <span class="legend-desc">Fast, low HP</span>
+            </div>
+            <div class="legend-row">
+              <div class="legend-dot" style="background:#e8eef5"></div>
+              <span class="legend-name">NORMAL</span>
+              <span class="legend-desc">Balanced</span>
+            </div>
+            <div class="legend-row">
+              <div class="legend-dot" style="background:#ffb347"></div>
+              <span class="legend-name">BIG</span>
+              <span class="legend-desc">Slow, high HP</span>
+            </div>
+            <div class="legend-row">
+              <div class="legend-dot" style="background:#a8f0c8"></div>
+              <span class="legend-name">DODGER</span>
+              <span class="legend-desc">Strafes L/R</span>
+            </div>
+            <div class="legend-row">
+              <div class="legend-dot" style="background:#ff7f7f"></div>
+              <span class="legend-name">RUSHER</span>
+              <span class="legend-desc">Speeds up</span>
+            </div>
+            <div class="legend-row">
+              <div class="legend-dot" style="background:#b0c8ff"></div>
+              <span class="legend-name">SHIELDED</span>
+              <span class="legend-desc">Focus to break</span>
+            </div>
+          </div>
+
+          <div class="divider"></div>
+          <p class="tiny">Tip: pinch fingers together to focus sand and deal more damage.</p>
+          <div class="tiny" id="status"></div>
+
+        </div><!-- end .panel-extras -->
+      </div>
+
+      <div id="stage">
+
+        <!-- Start screen shown until camera starts -->
+        <div id="startScreen">
+          <div class="start-inner">
+            <h1 class="start-title">ASCII<br>WINDSTRIKE</h1>
+            <p class="start-sub">a computer vision sand shooter</p>
+
+            <div class="start-divider"></div>
+
+            <div class="start-section">
+              <div class="start-section-title">HOW TO PLAY</div>
+              <div class="start-step"><span class="step-num">01</span><span>Point your index finger at the camera</span></div>
+              <div class="start-step"><span class="step-num">02</span><span>Move your hand towards the camera to blow sand forward</span></div>
+              <div class="start-step"><span class="step-num">03</span><span>Pinch fingers together to focus the beam for more damage</span></div>
+              <div class="start-step"><span class="step-num">04</span><span>Don't let enemies reach you — they deal damage on contact</span></div>
+            </div>
+
+            <div class="start-divider"></div>
+
+            <div class="start-section">
+              <div class="start-section-title">ENEMY TYPES</div>
+              <div class="start-enemy"><span style="color:#e8eef5">(>_&lt;)</span> SMALL — fast, low HP</div>
+              <div class="start-enemy"><span style="color:#e8eef5">(ಠ_ಠ)</span> NORMAL — balanced</div>
+              <div class="start-enemy"><span style="color:#ffb347">(ಠ_ಠ)</span> BIG — slow, high HP</div>
+              <div class="start-enemy"><span style="color:#a8f0c8">(°▽°)</span> DODGER — strafes side to side</div>
+              <div class="start-enemy"><span style="color:#ff7f7f">(▶▶▶)</span> RUSHER — accelerates at you</div>
+              <div class="start-enemy"><span style="color:#b0c8ff">(#_#)</span> SHIELDED — focus sand to break shield</div>
+            </div>
+
+            <div class="start-divider"></div>
+
+            <div class="start-cta">
+              <span class="start-arrow">&#x2190;</span>
+              <span>Click <strong>Start Camera</strong> in the panel to begin</span>
+            </div>
+          </div>
+        </div>
+
+        <canvas id="game" style="display:none"></canvas>
+      </div>
+    </div>
+
+  </body>
+</html>
